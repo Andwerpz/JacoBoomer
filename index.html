@@ -1,101 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>JacoBoomer</title>
-<style>
-</style>
+  <meta charset="UTF-8">
+  <title>JacoBoomer</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="text/javascript" src="script.js" ></script>
 </head>
-<body style="margin: 0; background-color: black; overflow-x: hidden;">
-	<div style="position: relative; width: 100vw; height: 20vh">
-		<img src="fire.gif" alt="fire"
-			style="width: 100vw; height: 20vh; transform: scaleY(-1)">
-		<div
-			style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 10vh; font-family: CURSIVE; background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet); color: transparent; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-			<h1>JacoBoomer!!!</h1>
-		</div>
 
-
-	</div>
-	<img src="jacob.jpg" alt="jacob"
-		style="margin: auto; width: 50vw; /* text-align: center; */ display: block;">
-
-	<div id="clicker_game_div" style="color: white">
-		<h1 id="jacob_counter" style="color: white">Jacobs: 0</h1>
-		<div id="construct_div">
-			<button onclick="constructJacob()">Construct a new Jacob!</button>
-			<br>
-		</div>
-		<div id="factory_div">
-			<h3>Factory</h3>
-			<hr>
-			<button onclick="sendJacobToFactory()">Send a Jacob to work
-				in the Factory!</button>
-			<button onclick="removeJacobFromFactory()">Deprive a Jacob
-				from work!</button>
-			<p id="factory_jacob_counter" style="color: white">Factory
-				Jacobs: 0</p>
-			<br>
-		</div>
-		<div id="school_div">
-			<h3>School</h3>
-			<hr>
-			<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
-			<button onclick="removeJacobFromSchool()">Condemn a Jacob to
-				a lifetime of hard labor!</button>
-			<p id="school_jacob_counter" style="color: white">School Jacobs:
-				0</p>
-			<br>
-		</div>
-	</div>
-
-
-	<script>
-		let jacobs = 0;
-		let factoryJacobs = 0;
-		let schoolJacobs = 0;
-		function reloadCounters() {
-			document.getElementById("jacob_counter").innerHTML = "Jacobs: "
-					+ jacobs;
-			document.getElementById("factory_jacob_counter").innerHTML = "Factory Jacobs: "
-					+ factoryJacobs;
-			document.getElementById("school_jacob_counter").innerHTML = "School Jacobs: "
-					+ schoolJacobs;
-		}
-		function constructJacob() {
-			jacobs++;
-			reloadCounters();
-		}
-		function sendJacobToFactory() {
-			if (jacobs >= 1) {
-				jacobs--;
-				factoryJacobs++;
-				reloadCounters();
-			}
-		}
-		function removeJacobFromFactory() {
-			if (factoryJacobs >= 1) {
-				factoryJacobs--;
-				jacobs++;
-				reloadCounters();
-			}
-		}
-		function sendJacobToSchool() {
-			if (jacobs >= 1) {
-				jacobs--;
-				schoolJacobs++;
-				reloadCounters();
-			}
-		}
-		function removeJacobFromSchool() {
-			if (schoolJacobs >= 1) {
-				schoolJacobs--;
-				jacobs++;
-				reloadCounters();
-			}
-		}
-	</script>
-
-
+<body class="body">
+  <div class="main">
+    <img class="fire-img" src="fire.gif" alt="fire">
+    <div>
+      <h1 class="banner">JacoBoomer!!!</h1>
+    </div>
+    <div class="flex-container">
+      <div id="clicker_game_div" style="color: white">
+        <h1 id="jacob_counter" style="color: white">Jacobs: 0</h1>
+        <div id="construct_div">
+          <button onclick="constructJacob()">Construct a new Jacob!</button>
+          <br>
+        </div>
+        <div id="factory_div">
+          <h3>Factory</h3>
+          <hr>
+          <button onclick="sendJacobToFactory()">Send a Jacob to work in the Factory!</button>
+          <button onclick="removeJacobFromFactory()">Deprive a Jacob from work!</button>
+          <p id="factory_jacob_counter" style="color: white">Factory Jacobs: 0</p>
+          <br>
+        </div>
+        <div id="school_div">
+          <h3>School</h3>
+          <hr>
+          <button onclick="sendJacobToSchool()">Educate a Jacob!</button>
+          <button onclick="removeJacobFromSchool()">Condemn a Jacob to a lifetime of hard labor!</button>
+          <p id="school_jacob_counter" style="color: white">School Jacobs: 0</p>
+          <br>
+        </div>
+      </div>
+      <div>
+        <img class="jacob-img" src="jacob.jpg" alt="jacob">
+      </div>
+    </div>
+  </div>
 </body>
 </html>

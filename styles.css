@@ -1,0 +1,50 @@
+.body {
+  margin: 0;
+  background-color: black;
+  overflow-x: hidden;
+}
+
+.main {
+  position: relative;
+  width: 100vw;
+  height: 1vh;
+}
+
+.fire-img {
+  width: 100vw;
+  height: 15vh;
+  transform: scaleY(1);
+}
+
+.banner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10vh;
+  font-family: CURSIVE;
+  background: linear-gradient(
+    to right,
+    red,
+    orange,
+    yellow,
+    green,
+    cyan,
+    blue,
+    violet
+  );
+  color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.jacob-img {
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: row;
+  flex: 2 1 auto;
+}
