@@ -20,59 +20,80 @@
 	<img src="jacob.jpg" alt="jacob"
 		style="margin: auto; width: 50vw; /* text-align: center; */ display: block;">
 
-	<h1 id="jacob_counter" style="color: white">Jacobs: 0</h1>
-	<button onclick="constructJacob()">Construct a new Jacob!</button>
-	<hr>
-	<button onclick="sendJacobToFactory()">Send a Jacob to work in the Factory!</button>
-	<button onclick="removeJacobFromFactory()">Deprive a Jacob from work!</button>
-	<p id="factory_jacob_counter" style="color: white">Factory Jacobs: 0</p>
-	<hr>
-	<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
-	<button onclick="removeJacobFromSchool()">Condemn a Jacob to a lifetime of hard labor!</button>
-	<p id="school_jacob_counter" style="color: white">School Jacobs: 0</p>
+	<div id="clicker_game_div" style="color: white">
+		<h1 id="jacob_counter" style="color: white">Jacobs: 0</h1>
+		<div id="construct_div">
+			<button onclick="constructJacob()">Construct a new Jacob!</button>
+			<br>
+		</div>
+		<div id="factory_div">
+			<h3>Factory</h3>
+			<hr>
+			<button onclick="sendJacobToFactory()">Send a Jacob to work
+				in the Factory!</button>
+			<button onclick="removeJacobFromFactory()">Deprive a Jacob
+				from work!</button>
+			<p id="factory_jacob_counter" style="color: white">Factory
+				Jacobs: 0</p>
+			<br>
+		</div>
+		<div id="school_div">
+			<h3>School</h3>
+			<hr>
+			<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
+			<button onclick="removeJacobFromSchool()">Condemn a Jacob to
+				a lifetime of hard labor!</button>
+			<p id="school_jacob_counter" style="color: white">School Jacobs:
+				0</p>
+			<br>
+		</div>
+	</div>
+
 
 	<script>
 		let jacobs = 0;
 		let factoryJacobs = 0;
 		let schoolJacobs = 0;
 		function reloadCounters() {
-			document.getElementById("jacob_counter").innerHTML = "Jacobs: " + jacobs;
-			document.getElementById("factory_jacob_counter").innerHTML = "Factory Jacobs: " + factoryJacobs;
-			document.getElementById("school_jacob_counter").innerHTML = "School Jacobs: " + schoolJacobs;
+			document.getElementById("jacob_counter").innerHTML = "Jacobs: "
+					+ jacobs;
+			document.getElementById("factory_jacob_counter").innerHTML = "Factory Jacobs: "
+					+ factoryJacobs;
+			document.getElementById("school_jacob_counter").innerHTML = "School Jacobs: "
+					+ schoolJacobs;
 		}
 		function constructJacob() {
 			jacobs++;
 			reloadCounters();
 		}
 		function sendJacobToFactory() {
-			if(jacobs >= 1){
-				jacobs --;
-				factoryJacobs ++;
+			if (jacobs >= 1) {
+				jacobs--;
+				factoryJacobs++;
 				reloadCounters();
 			}
 		}
-		function removeJacobFromFactory(){
-			if(factoryJacobs >= 1){
-				factoryJacobs --;
-				jacobs ++;
+		function removeJacobFromFactory() {
+			if (factoryJacobs >= 1) {
+				factoryJacobs--;
+				jacobs++;
 				reloadCounters();
 			}
 		}
 		function sendJacobToSchool() {
-			if(jacobs >= 1){
-				jacobs --;
-				schoolJacobs ++;
+			if (jacobs >= 1) {
+				jacobs--;
+				schoolJacobs++;
 				reloadCounters();
 			}
 		}
 		function removeJacobFromSchool() {
-			if(schoolJacobs >= 1){
-				schoolJacobs --;
-				jacobs ++;
+			if (schoolJacobs >= 1) {
+				schoolJacobs--;
+				jacobs++;
 				reloadCounters();
 			}
 		}
-		
 	</script>
 
 
