@@ -26,9 +26,19 @@
     <input type="radio" name="hot_or_not" value="Yes">Yes
 <input type="radio" name="hot_or_not" value="No">No
     <br>
-<input type="button" name="submit" value="Submit">
 </form>
 
+<p id="jacobcounter" style="color: green"></p>
+
+<button onclick="updatejacob()">Jacob!</button>
+
+<script>
+let jacobs = 0;
+function updatejacob(){
+jacobs++;
+document.getElementById("jacobcounter").innerHTML = jacobs;    
+}
+</script> 
 
 
 </body></html>
