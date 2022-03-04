@@ -1,15 +1,22 @@
 let jacobs = 0;
 let factoryJacobs = 0;
+let factoryJacobRate = 0.05;
 let schoolJacobs = 0;
-let counter = 0.0;
-setInterval(jacobWork, 1000);
+setInterval(updateCounters, 10);
+let prevUpdateTime = Date.now();
 function reloadCounters() {
   document.getElementById("jacob_counter").innerHTML = "Jacobs: "
-    + jacobs;
+    + parseInt(jacobs);
+    
   document.getElementById("factory_jacob_counter").innerHTML = "Factory Jacobs: "
-    + factoryJacobs;
+    + parseInt(factoryJacobs);
+    document.getElementById("factory_jacob_rate").innerHTML = "Factory Jacob Production Rate: "
+    + factoryJacobRate;
+    document.getElementById("factory_jacob_rate_counter").innerHTML = "Jacobs per second: "
+    + (factoryJacobRate * factoryJacobs).toFixed(2);
+    
   document.getElementById("school_jacob_counter").innerHTML = "School Jacobs: "
-    + schoolJacobs;
+    + parseInt(schoolJacobs);
 }
 function constructJacob() {
   jacobs++;
@@ -43,7 +50,13 @@ function removeJacobFromSchool() {
     reloadCounters();
   }
 }
-function jacobWork() {
-  jacobs += factoryJacobs;
-  reloadCounters();
+function updateCounters() {
+	let jacobDiff = 0;
+	jacobDiff += factoryJacobs * factoryJacobRate;
+	
+	let curTime = Date.now();
+	jacobDiff *= (curTime - prevUpdateTime) / 1000;
+	prevUpdateTime = curTime;
+  	jacobs += jacobDiff;
+ 	reloadCounters();
 }
