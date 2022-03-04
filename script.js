@@ -9,7 +9,7 @@ let schoolJacobs = 0;
 
 let prevUpdateTime = Date.now();
 
-setInterval(updateCounters, 10);
+setInterval(tick, 10);	//main loop
 setInterval(saveGame, 60000)
 
 function loadGame(){
@@ -20,7 +20,7 @@ function loadGame(){
     factoryBuilt = savedValues.factoryBuilt;
     if(factoryBuilt){
       document.getElementById("factory_div").style.display='inline';
-      document.getElementById("showFactoryBtn").style.display='none';
+      document.getElementById("upgrade_build_factory").style.display='none';
     }
     factoryJacobs = parseFloat(savedValues.factoryJacobs);
     factoryJacobRate = parseFloat(savedValues.factoryJacobRate);
@@ -28,7 +28,7 @@ function loadGame(){
     schoolBuilt = savedValues.schoolBuilt;
     if(schoolBuilt){
       document.getElementById("school_div").style.display='inline';
-      document.getElementById("showSchoolBtn").style.display='none';
+      document.getElementById("upgrade_build_school").style.display='none';
     }
     schoolJacobs = parseFloat(savedValues.schoolJacobs);
   }
@@ -51,6 +51,31 @@ function saveGame(){
   localStorage.setItem("gameSave",JSON.stringify(gameSave));
 }
 
+function resetGame() {
+	jacobs = 0;
+
+	factoryBuilt = false;
+	factoryJacobs = 0;
+	factoryJacobRate = 0.05;
+
+	schoolBuilt = false;
+	schoolJacobs = 0;
+}
+
+//MAIN LOOP
+function tick() {
+	updateCounters();
+	reloadCounters();
+	
+	if(!factoryBuilt && jacobs >= 50){
+		document.getElementById("upgrade_build_factory").style.display='';
+	}
+	
+	if(!schoolBuilt && jacobs >= 5000){
+		document.getElementById("upgrade_build_school").style.display='';
+	}
+}
+
 function reloadCounters() {
   document.getElementById("jacob_counter").innerHTML = parseInt(jacobs);
     
@@ -63,14 +88,13 @@ function reloadCounters() {
 
 function constructJacob() {
   jacobs++;
-  reloadCounters();
 }
 
-function showFactory(){
-  if(parseInt(jacobs) >= 50){
+function buildFactory(){
+  if(parseInt(jacobs) >= 100){
     document.getElementById("factory_div").style.display='inline';
-    jacobs -= 50;
-    document.getElementById("showFactoryBtn").style.display='none';
+    jacobs -= 100;
+    document.getElementById("upgrade_build_factory").style.display='none';
     factoryBuilt = true;
   }
 }
@@ -78,36 +102,33 @@ function sendJacobToFactory() {
   if (jacobs >= 1) {
     jacobs--;
     factoryJacobs++;
-    reloadCounters();
   }
 }
 function removeJacobFromFactory() {
   if (factoryJacobs >= 1) {
     factoryJacobs--;
     jacobs++;
-    reloadCounters();
   }
 }
 
-function showSchool(){
-  if(parseInt(jacobs) >= 100){
-    document.getElementById("school_div").style.display='inline';
-    jacobs -= 100;
-    document.getElementById("showSchoolBtn").style.display='none';
+function buildSchool(){
+  if(parseInt(jacobs) >= 10000){
+    document.getElementById("school_div").style.display='';
+    jacobs -= 10000;
+    document.getElementById("upgrade_build_school").style.display='none';
     schoolBuilt = true;
-  }}
+  }
+}
 function sendJacobToSchool() {
   if (jacobs >= 1) {
     jacobs--;
     schoolJacobs++;
-    reloadCounters();
   }
 }
 function removeJacobFromSchool() {
   if (schoolJacobs >= 1) {
     schoolJacobs--;
     jacobs++;
-    reloadCounters();
   }
 }
 
@@ -119,5 +140,4 @@ function updateCounters() {
 	jacobDiff *= (curTime - prevUpdateTime) / 1000;
 	prevUpdateTime = curTime;
   	jacobs += jacobDiff;
- 	reloadCounters();
 }

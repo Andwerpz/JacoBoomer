@@ -25,8 +25,15 @@
 	font-family: CURSIVE;
 	background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
 	color: transparent;
-	-webkit-background-clip: text;
+	-webkit-background-clip: text;	
 	-webkit-text-fill-color: transparent;
+}
+
+h4{
+	line-height: 0px;
+}
+h3{
+	line-height: 0px;
 }
 
 .jacob-img {
@@ -50,6 +57,20 @@
 
 #school_div{
 	display: none;
+}
+
+#upgrade_menu_div{
+	width: 300px;
+}
+
+.upgrade_div{
+	text-align: center;
+	background-color: grey;
+	margin-top: 10px;
+	padding: 5px;
+	border: 1px white solid;
+	width: 288px;
+	cursor: pointer;
 }
 
 .upgradeBtn{

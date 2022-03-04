@@ -45,12 +45,19 @@
 				</div>
 			</div>
 			<div class="clicker_game_div">
-				<div id="upgrade_div">
+				<div id="upgrade_menu_div">
 					<h3>Upgrades</h3>
 					<hr>
-					<span id="no_upgrades_available_message">No upgrades available currently</span>
-					<button onclick="showFactory()" class="upgradeBtn" id="showFactoryBtn">Show Factory</button>
-					<button onclick="showSchool()" class= "upgradeBtn" id="showSchoolBtn">Show School</button>
+					<div class="upgrade_div" id="upgrade_build_factory" onclick="buildFactory()">
+						<h4>Build a Factory</h4>
+						Building a factory will help you make more Jacobs<br>
+						Cost: 100 Jacobs
+					</div>
+					<div class="upgrade_div" id="upgrade_build_school" onclick="buildSchool()">
+						<h4>Build a School</h4>
+						Jacobs love to learn, building a school will increase productivity<br>
+						Cost: 10000 Jacobs
+					</div>
 				</div>
 			</div>
 			<div>
