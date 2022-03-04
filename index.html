@@ -14,8 +14,8 @@
 			<h1 class="banner">JacoBoomer!!!</h1>
 		</div>
 		<div class="flex-container">
-			<div id="clicker_game_div" style="color: white; line-height: 2px">
-				<h1 id="jacob_counter">Jacobs: 0</h1>
+			<div id="clicker_game_div" style="color: white">
+				<h1>Jacobs: <span id="jacob_counter">0</span></h1>
 				<br>
 				<div id="construct_div">
 					<button onclick="constructJacob()">Construct a new Jacob!</button>
@@ -24,22 +24,21 @@
 				<div id="factory_div">
 					<h3>Factory</h3>
 					<hr>
-					<button onclick="sendJacobToFactory()">Send a Jacob to
-						work in the Factory!</button>
-					<button onclick="removeJacobFromFactory()">Deprive a Jacob
-						from work!</button>
-					<p id="factory_jacob_counter">Factory Jacobs: 0</p>
-					<p id="factory_jacob_rate">Factory Jacob Production Rate: 0.05</p>
-					<p id="factory_jacob_rate_counter">Jacobs per second: 0</p>
+					<button onclick="sendJacobToFactory()">Send a Jacob to work in the Factory!</button>
+					<button onclick="removeJacobFromFactory()">Deprive a Jacob from work!</button>
+					<br>
+					Factory Jacobs: <span id="factory_jacob_counter"></span><br>
+					Factory Jacob Production Rate: <span id="factory_jacob_rate"></span><br>
+					Jacobs per second: <span id="factory_jacob_rate_counter"></span><br>
 					<br>
 				</div>
 				<div id="school_div">
 					<h3>School</h3>
 					<hr>
 					<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
-					<button onclick="removeJacobFromSchool()">Condemn a Jacob
-						to a lifetime of hard labor!</button>
-					<p id="school_jacob_counter">School Jacobs: 0</p>
+					<button onclick="removeJacobFromSchool()">Condemn a Jacob to a lifetime of hard labor!</button>
+					<br>
+					School Jacobs: <span id="school_jacob_counter">0</span><br>
 					<br>
 				</div>
 			</div>

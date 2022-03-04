@@ -5,18 +5,13 @@ let schoolJacobs = 0;
 setInterval(updateCounters, 10);
 let prevUpdateTime = Date.now();
 function reloadCounters() {
-  document.getElementById("jacob_counter").innerHTML = "Jacobs: "
-    + parseInt(jacobs);
+  document.getElementById("jacob_counter").innerHTML = parseInt(jacobs);
     
-  document.getElementById("factory_jacob_counter").innerHTML = "Factory Jacobs: "
-    + parseInt(factoryJacobs);
-    document.getElementById("factory_jacob_rate").innerHTML = "Factory Jacob Production Rate: "
-    + factoryJacobRate;
-    document.getElementById("factory_jacob_rate_counter").innerHTML = "Jacobs per second: "
-    + (factoryJacobRate * factoryJacobs).toFixed(2);
+  document.getElementById("factory_jacob_counter").innerHTML = parseInt(factoryJacobs);
+    document.getElementById("factory_jacob_rate").innerHTML = factoryJacobRate;
+    document.getElementById("factory_jacob_rate_counter").innerHTML = (factoryJacobRate * factoryJacobs).toFixed(2);
     
-  document.getElementById("school_jacob_counter").innerHTML = "School Jacobs: "
-    + parseInt(schoolJacobs);
+  document.getElementById("school_jacob_counter").innerHTML = parseInt(schoolJacobs);
 }
 function constructJacob() {
   jacobs++;
