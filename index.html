@@ -13,9 +13,9 @@
 		<div>
 			<h1 class="banner">JacoBoomer!!!</h1>
 		</div>
-		<div class="flex-container">
-			<div id="clicker_game_div" style="color: white">
-        <button onclick="saveGame()">Save</button>
+		<div class="flex-container" style="color: white">
+			<div class="clicker_game_div">
+				<button onclick="saveGame()">Save</button>
 				<h1>Jacobs: <span id="jacob_counter">0</span></h1>
 				<br>
 				<div id="construct_div">
@@ -27,7 +27,7 @@
 					<hr>
 					<button onclick="sendJacobToFactory()">Send a Jacob to work in the Factory!</button>
 					<button onclick="removeJacobFromFactory()">Deprive a Jacob from work!</button>
-					<br>
+					<br> 
 					Factory Jacobs: <span id="factory_jacob_counter"></span><br>
 					Factory Jacob Production Rate: <span id="factory_jacob_rate"></span><br>
 					Jacobs per second: <span id="factory_jacob_rate_counter"></span><br>
@@ -38,9 +38,16 @@
 					<hr>
 					<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
 					<button onclick="removeJacobFromSchool()">Condemn a Jacob to a lifetime of hard labor!</button>
-					<br>
+					<br> 
 					School Jacobs: <span id="school_jacob_counter">0</span><br>
 					<br>
+				</div>
+			</div>
+			<div class="clicker_game_div">
+				<div id="upgrade_div">
+					<h3>Upgrades</h3>
+					<hr>
+					<span id="no_upgrades_available_message">No upgrades available currently</span>
 				</div>
 			</div>
 			<div>
