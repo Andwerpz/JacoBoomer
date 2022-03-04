@@ -7,7 +7,7 @@
 <script type="text/javascript" src="script.js"></script>
 </head>
 
-<body class="body">
+<body class="body" onload="loadGame()">
 	<div class="main">
 		<img class="fire-img" src="fire.gif" alt="fire">
 		<div>
@@ -15,6 +15,7 @@
 		</div>
 		<div class="flex-container">
 			<div id="clicker_game_div" style="color: white">
+        <button onclick="saveGame()">Save</button>
 				<h1>Jacobs: <span id="jacob_counter">0</span></h1>
 				<br>
 				<div id="construct_div">

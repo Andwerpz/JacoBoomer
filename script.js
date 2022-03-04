@@ -2,8 +2,35 @@ let jacobs = 0;
 let factoryJacobs = 0;
 let factoryJacobRate = 0.05;
 let schoolJacobs = 0;
-setInterval(updateCounters, 10);
+
 let prevUpdateTime = Date.now();
+
+setInterval(updateCounters, 10);
+setInterval(saveGame, 60000)
+
+function loadGame(){
+  if(localStorage.getItem("gameSave") != null){
+    let savedValues = JSON.parse(localStorage.getItem("gameSave"));
+    jacobs = parseFloat(savedValues.jacobs);
+    factoryJacobs = savedValues.factoryJacobs;
+    factoryJacobRate = savedValues.factoryJacobRate;
+    schoolJacobs = savedValues.schoolJacobs;
+  }
+  else{
+    saveGame();
+  }
+}
+
+function saveGame(){
+  let gameSave = {
+    jacobs: jacobs,
+    factoryJacobs: factoryJacobs,
+    factoryJacobRate: factoryJacobRate,
+    schoolJacobs: schoolJacobs
+  }
+  localStorage.setItem("gameSave",JSON.stringify(gameSave));
+}
+
 function reloadCounters() {
   document.getElementById("jacob_counter").innerHTML = parseInt(jacobs);
     
@@ -55,3 +82,5 @@ function updateCounters() {
   	jacobs += jacobDiff;
  	reloadCounters();
 }
+
+//    var loadGame = JSON.parse(localStorage.getItem("saveGame"));
