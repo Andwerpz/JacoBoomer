@@ -18,10 +18,18 @@ function loadGame(){
     jacobs = parseFloat(savedValues.jacobs);
     
     factoryBuilt = savedValues.factoryBuilt;
+    if(factoryBuilt){
+      document.getElementById("factory_div").style.display='inline';
+      document.getElementById("showFactoryBtn").style.display='none';
+    }
     factoryJacobs = parseFloat(savedValues.factoryJacobs);
     factoryJacobRate = parseFloat(savedValues.factoryJacobRate);
     
     schoolBuilt = savedValues.schoolBuilt;
+    if(schoolBuilt){
+      document.getElementById("school_div").style.display='inline';
+      document.getElementById("showSchoolBtn").style.display='none';
+    }
     schoolJacobs = parseFloat(savedValues.schoolJacobs);
   }
   else{
@@ -47,8 +55,8 @@ function reloadCounters() {
   document.getElementById("jacob_counter").innerHTML = parseInt(jacobs);
     
   document.getElementById("factory_jacob_counter").innerHTML = parseInt(factoryJacobs);
-    document.getElementById("factory_jacob_rate").innerHTML = factoryJacobRate;
-    document.getElementById("factory_jacob_rate_counter").innerHTML = (factoryJacobRate * factoryJacobs).toFixed(2);
+  document.getElementById("factory_jacob_rate").innerHTML = factoryJacobRate;
+  document.getElementById("factory_jacob_rate_counter").innerHTML = (factoryJacobRate * factoryJacobs).toFixed(2);
     
   document.getElementById("school_jacob_counter").innerHTML = parseInt(schoolJacobs);
 }
@@ -56,6 +64,15 @@ function reloadCounters() {
 function constructJacob() {
   jacobs++;
   reloadCounters();
+}
+
+function showFactory(){
+  if(parseInt(jacobs) >= 50){
+    document.getElementById("factory_div").style.display='inline';
+    jacobs -= 50;
+    document.getElementById("showFactoryBtn").style.display='none';
+    factoryBuilt = true;
+  }
 }
 function sendJacobToFactory() {
   if (jacobs >= 1) {
@@ -71,6 +88,14 @@ function removeJacobFromFactory() {
     reloadCounters();
   }
 }
+
+function showSchool(){
+  if(parseInt(jacobs) >= 100){
+    document.getElementById("school_div").style.display='inline';
+    jacobs -= 100;
+    document.getElementById("showSchoolBtn").style.display='none';
+    schoolBuilt = true;
+  }}
 function sendJacobToSchool() {
   if (jacobs >= 1) {
     jacobs--;
@@ -85,6 +110,7 @@ function removeJacobFromSchool() {
     reloadCounters();
   }
 }
+
 function updateCounters() {
 	let jacobDiff = 0;
 	jacobDiff += factoryJacobs * factoryJacobRate;
@@ -95,5 +121,3 @@ function updateCounters() {
   	jacobs += jacobDiff;
  	reloadCounters();
 }
-
-//    var loadGame = JSON.parse(localStorage.getItem("saveGame"));

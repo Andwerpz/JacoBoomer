@@ -43,3 +43,15 @@
 .clicker_game_div {
 	padding: 10px;
 }
+
+#factory_div{
+	display: none;
+}
+
+#school_div{
+	display: none;
+}
+
+.upgradeBtn{
+	display: block;
+}
