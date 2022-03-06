@@ -2,7 +2,8 @@ let jacobs = 0;
 
 let factoryBuilt = false;
 let factoryJacobs = 0;
-let factoryJacobRate = 0.05;
+let factoryRate = 0.05;
+let factoryRateLevel = 0;
 
 let schoolBuilt = false;
 let schoolJacobs = 0;
@@ -13,23 +14,17 @@ setInterval(tick, 10);	//main loop
 setInterval(saveGame, 60000)
 
 function loadGame() {
+  resetDisplay();
   if (localStorage.getItem("gameSave") != null) {
     let savedValues = JSON.parse(localStorage.getItem("gameSave"));
     jacobs = parseFloat(savedValues.jacobs);
 
     factoryBuilt = savedValues.factoryBuilt;
-    if (factoryBuilt) {
-      document.getElementById("factory_div").style.display = 'inline';
-      document.getElementById("upgrade_build_factory").style.display = 'none';
-    }
     factoryJacobs = parseFloat(savedValues.factoryJacobs);
-    factoryJacobRate = parseFloat(savedValues.factoryJacobRate);
+    factoryRate = parseFloat(savedValues.factoryRate);
+    factoryRateLevel = parseInt(savedValues.factoryRateLevel);
 
     schoolBuilt = savedValues.schoolBuilt;
-    if (schoolBuilt) {
-      document.getElementById("school_div").style.display = 'inline';
-      document.getElementById("upgrade_build_school").style.display = 'none';
-    }
     schoolJacobs = parseFloat(savedValues.schoolJacobs);
   }
   else {
@@ -43,7 +38,8 @@ function saveGame() {
 
     factoryBuilt: factoryBuilt,
     factoryJacobs: factoryJacobs,
-    factoryJacobRate: factoryJacobRate,
+    factoryRate: factoryRate,
+    factoryRateLevel: factoryRateLevel,
 
     schoolBuilt: schoolBuilt,
     schoolJacobs: schoolJacobs
@@ -56,25 +52,54 @@ function resetGame() {
 
   factoryBuilt = false;
   factoryJacobs = 0;
-  factoryJacobRate = 0.05;
+  factoryRate = 0.05;
+  factoryRateLevel = 0;
 
   schoolBuilt = false;
   schoolJacobs = 0;
+  
+  resetDisplay();
 
   saveGame();
+}
+
+function resetDisplay() {
+  //RESET UPGRADES DISPLAY
+  document.getElementById("upgrade_build_factory").style.display = 'none';
+  document.getElementById("upgrade_factory_rate_1").style.display = 'none';
+  document.getElementById("upgrade_factory_rate_2").style.display = 'none';
+  document.getElementById("upgrade_build_school").style.display = 'none';
+  
+  //RESET BUILDINGS DISPLAY
+  document.getElementById("factory_div").style.display = 'none';
+  document.getElementById("school_div").style.display = 'none';
 }
 
 //MAIN LOOP
 function tick() {
   updateCounters();
   reloadCounters();
-
+  
+  //FACTORY
+  if (factoryBuilt) {
+    document.getElementById("factory_div").style.display = 'inline';
+  }
   if (!factoryBuilt && jacobs >= 50) {
     document.getElementById("upgrade_build_factory").style.display = 'block';
   }
-
+  if(factoryBuilt && factoryRateLevel === 0 && jacobs >= 500) {
+  	document.getElementById("upgrade_factory_rate_1").style.display = 'block';
+  }
+  if(factoryBuilt && factoryRateLevel == 1 && jacobs >= 5000){
+    document.getElementById("upgrade_factory_rate_2").style.display = 'block';
+  }
+  
+  //SCHOOL
   if (!schoolBuilt && jacobs >= 5000) {
     document.getElementById("upgrade_build_school").style.display = 'block';
+  }
+  if(schoolBuilt){
+  	document.getElementById("school_div").style.display = 'inline';
   }
 }
 
@@ -82,8 +107,8 @@ function reloadCounters() {
   document.getElementById("jacob_counter").innerHTML = parseInt(jacobs);
 
   document.getElementById("factory_jacob_counter").innerHTML = parseInt(factoryJacobs);
-  document.getElementById("factory_jacob_rate").innerHTML = factoryJacobRate;
-  document.getElementById("factory_jacob_rate_counter").innerHTML = (factoryJacobRate * factoryJacobs).toFixed(2);
+  document.getElementById("factory_jacob_rate").innerHTML = factoryRate;
+  document.getElementById("factory_jacob_rate_counter").innerHTML = (factoryRate * factoryJacobs).toFixed(2);
 
   document.getElementById("school_jacob_counter").innerHTML = parseInt(schoolJacobs);
 }
@@ -112,6 +137,22 @@ function removeJacobFromFactory() {
     jacobs++;
   }
 }
+function upgradeFactoryRate1() {
+  if(jacobs >= 1000){
+  	jacobs -= 1000;
+  	factoryRateLevel = 1;
+  	factoryRate *= 2;
+  	document.getElementById("upgrade_factory_rate_1").style.display = 'none';
+  }
+}
+function upgradeFactoryRate2() {
+  if(jacobs >= 10000){
+  	jacobs -= 10000;
+  	factoryRateLevel = 2;
+  	factoryRate *= 2;
+  	document.getElementById("upgrade_factory_rate_2").style.display = 'none';
+  }
+}
 
 function buildSchool() {
   if (parseInt(jacobs) >= 10000) {
@@ -136,7 +177,7 @@ function removeJacobFromSchool() {
 
 function updateCounters() {
   let jacobDiff = 0;
-  jacobDiff += factoryJacobs * factoryJacobRate;
+  jacobDiff += factoryJacobs * factoryRate;
 
   let curTime = Date.now();
   jacobDiff *= (curTime - prevUpdateTime) / 1000;
