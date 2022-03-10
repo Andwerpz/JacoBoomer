@@ -16,9 +16,15 @@ let engineerJacobsUnlocked = false;
 let developerJacobsUnlocked = false;
 let architectJacobsUnlocked = false;
 
-let engineerJacobs = 0;
 let developerJacobs = 0;
+let code = 0;
+let developerTerminalUnlocked = false;
+
+let engineerJacobs = 0;
+let patents = 0;
+
 let architectJacobs = 0;
+let blueprints = 0;
 
 let prevUpdateTime = Date.now();
 
@@ -40,14 +46,20 @@ function loadGame() {
     schoolJacobs = parseFloat(savedValues.schoolJacobs);
 
     educatedJacobs = parseFloat(savedValues.educatedJacobs);
-
+    
+	developerJacobsUnlocked = savedValues.developerJacobsUnlocked;
     engineerJacobsUnlocked = savedValues.engineerJacobsUnlocked;
-    developerJacobsUnlocked = savedValues.developerJacobsUnlocked;
     architectJacobsUnlocked = savedValues.architectJacobsUnlocked;
-
+    
+	developerJacobs = parseFloat(savedValues.developerJacobs);
+	code = parseFloat(savedValues.code);
+	developerTerminalUnlocked = savedValues.developerTerminalUnlocked;
+	
     engineerJacobs = parseFloat(savedValues.engineerJacobs);
-    developerJacobs = parseFloat(savedValues.developerJacobs);
+    patents = parseFloat(savedValues.patents);
+    
     architectJacobs = parseFloat(savedValues.architectJacobs);
+    blueprints = parseFloat(savedValues.blueprints);
   }
   else {
     saveGame();
@@ -67,14 +79,20 @@ function saveGame() {
     schoolJacobs: schoolJacobs,
 
     educatedJacobs: educatedJacobs,
-
+    
+	developerJacobsUnlocked: developerJacobsUnlocked,
     engineerJacobsUnlocked: engineerJacobsUnlocked,
-    developerJacobsUnlocked: developerJacobsUnlocked,
     architectJacobsUnlocked: architectJacobsUnlocked,
 
-    engineerJacobs: engineerJacobs,
     developerJacobs: developerJacobs,
-    architectJacobs: architectJacobs
+    code: code,
+    developerTerminalUnlocked: developerTerminalUnlocked,
+    
+    engineerJacobs: engineerJacobs,
+    patents: patents,
+    
+    architectJacobs: architectJacobs,
+    blueprints: blueprints
   }
   localStorage.setItem("gameSave", JSON.stringify(gameSave));
 }
@@ -93,15 +111,20 @@ function resetGame() {
   schoolCountdownInterval = 60;
 
   educatedJacobs = 0;
-
-  engineerJacobsUnlocked = 0;
+  
   developerJacobsUnlocked = 0;
+  engineerJacobsUnlocked = 0;
   architectJacobsUnlocked = 0;
-
-  engineerJacobs = 0;
+  
   developerJacobs = 0;
+  code = 0;
+  developerTerminalUnlocked = false;
+  
+  engineerJacobs = 0;
+  patents = 0;
+  
   architectJacobs = 0;
-
+  blueprints = 0;
 
   resetDisplay();
 
@@ -119,14 +142,20 @@ function resetDisplay() {
   //RESET BUILDINGS DISPLAY
   document.getElementById("factory_div").style.display = 'none';
   document.getElementById("school_div").style.display = 'none';
-
-  document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
+  
   document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
   document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'none';
-
-  document.getElementById("engineer_jacob_counter_div").style.display = 'none';
+  
   document.getElementById("developer_jacob_counter_div").style.display = 'none';
+  document.getElementById("developer_jacob_div").style.display = 'none';
+  document.getElementById("upgrade_unlock_developer_terminal").style.display = 'none';
+  
+  document.getElementById("engineer_jacob_counter_div").style.display = 'none';
+  document.getElementById("engineer_jacob_div").style.display = 'none';
+  
   document.getElementById("architect_jacob_counter_div").style.display = 'none';
+  document.getElementById("architect_jacob_div").style.display = 'none';
 }
 
 //MAIN LOOP
@@ -158,23 +187,29 @@ function tick() {
   if(schoolBuilt){
   	document.getElementById("school_div").style.display = 'inline';
   }
-  if(schoolBuilt && !engineerJacobsUnlocked && jacobs >= 50000){
-  	document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'block';
-  }
-  if(schoolBuilt && !developerJacobsUnlocked && jacobs >= 500000){
+  if(schoolBuilt && !developerJacobsUnlocked && jacobs >= 50000){
   	document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'block';
+  }
+  if(schoolBuilt && !engineerJacobsUnlocked && jacobs >= 500000){
+  	document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'block';
   }
   if(schoolBuilt && !architectJacobsUnlocked && jacobs >= 5000000){
   	document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'block';
   }
-  if(engineerJacobsUnlocked){
-    document.getElementById("engineer_jacob_counter_div").style.display = 'inline';
-  }
   if(developerJacobsUnlocked){
   	document.getElementById("developer_jacob_counter_div").style.display = 'inline';
+  	document.getElementById("developer_jacob_div").style.display = 'inline';
+  }
+  if(developerJacobsUnlocked && code >= 100 && !developerTerminalUnlocked){
+  	document.getElementById("upgrade_unlock_developer_terminal").style.display = 'block';
+  }
+  if(engineerJacobsUnlocked){
+    document.getElementById("engineer_jacob_counter_div").style.display = 'inline';
+    document.getElementById("engineer_jacob_div").style.display = 'inline';
   }
   if(architectJacobsUnlocked){
   	document.getElementById("architect_jacob_counter_div").style.display = 'inline';
+  	document.getElementById("architect_jacob_div").style.display = 'inline';
   }
 }
 
@@ -189,10 +224,15 @@ function reloadCounters() {
   document.getElementById("school_countdown").innerHTML = parseInt(schoolCountdown);
 
   document.getElementById("educated_jacob_counter").innerHTML = parseInt(educatedJacobs);
-
-  document.getElementById("engineer_jacob_counter").innerHTML = parseInt(engineerJacobs);
+  
   document.getElementById("developer_jacob_counter").innerHTML = parseInt(developerJacobs);
+  document.getElementById("code_counter").innerHTML = parseInt(code);
+  
+  document.getElementById("engineer_jacob_counter").innerHTML = parseInt(engineerJacobs);
+  document.getElementById("patent_counter").innerHTML = parseInt(patents);
+  
   document.getElementById("architect_jacob_counter").innerHTML = parseInt(architectJacobs);
+  document.getElementById("blueprint_counter").innerHTML = parseInt(blueprints);
 }
 
 function constructJacob() {
@@ -294,6 +334,14 @@ function upgradeUnlockArchitectJacobs() {
   }
 }
 
+function upgradeUnlockDeveloperTerminal() {
+  if(code >= 1000){
+  	code -= 1000;
+  	developerTerminalUnlocked = true;
+  	document.getElementById("upgrade_unlock_developer_terminal").style.display = 'none';
+  }
+}
+
 
 function updateCounters() {
 
@@ -308,7 +356,7 @@ function updateCounters() {
   jacobs += jacobDiff;
 
 
-  //SCHOOL COUNTDOWN
+  //SCHOOL
   if(schoolBuilt){
   	if(schoolCountdown > schoolCountdownInterval){
   	  schoolCountdown = schoolCountdownInterval;
@@ -319,4 +367,7 @@ function updateCounters() {
  	  schoolCountdown += schoolCountdownInterval;
  	}
   }
+  
+  //DEVELOPER JACOBS
+  code += developerJacobs * timeDiff;
 }
