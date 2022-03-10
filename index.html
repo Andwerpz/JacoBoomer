@@ -27,9 +27,7 @@
 				<div id="factory_div">
 					<h3>Factory</h3>
 					<hr>
-					<button onclick="sendJacobToFactory()">Send a Jacob to work in the Factory!</button>
-					<button onclick="removeJacobFromFactory()">Deprive a Jacob from work!</button>
-					<br>
+					<button onclick="purchaseFactoryJacob()">Send a Jacob to work!</button><br>
 					Factory Jacobs: <span id="factory_jacob_counter"></span><br>
 					Factory Jacob Production Rate: <span id="factory_jacob_rate"></span><br>
 					Jacobs per second: <span id="factory_jacob_rate_counter"></span><br>
@@ -39,17 +37,22 @@
 					<h3>School</h3>
 					<hr>
 					<button onclick="sendJacobToSchool()">Educate a Jacob!</button>
-					<button onclick="removeJacobFromSchool()">Condemn a Jacob to a lifetime of hard labor!</button>
 					<br>
-					School Jacobs: <span id="school_jacob_counter">0</span><br>
+					School Jacobs: <span id="school_jacob_counter"></span><br>
+					Time Until Next Educated Jacob: <span id="school_countdown"></span><br>
 					<br>
+					Educated Jacobs: <span id="educated_jacob_counter"></span><br>
+					<br>
+					<div id="developer_jacob_counter_div">Developer Jacobs: <span id="developer_jacob_counter"></span> <button onclick="purchaseDeveloperJacob()">+Developer Jacob</button></div><br>
+					<div id="engineer_jacob_counter_div">Engineer Jacobs: <span id="engineer_jacob_counter"></span> <button onclick="purchaseEngineerJacob()">+Engineer Jacob</button></div><br>
+					<div id="architect_jacob_counter_div">Architect Jacobs: <span id="architect_jacob_counter"></span> <button onclick="purchaseArchitectJacob()">+Architect Jacob</button></div><br>
 				</div>
 			</div>
 			<div class="clicker_game_div">
 				<div id="upgrade_menu_div">
 					<h3>Upgrades</h3>
 					<hr>
-					<div class="upgrade_div" id="upgrade_build_factory" onclick="buildFactory()">
+					<div class="upgrade_div" id="upgrade_build_factory" onclick="upgradeBuildFactory()">
 						<h4>Build a Factory</h4>
 						Building a factory will help you make more Jacobs<br>
 						Cost: 100 Jacobs
@@ -66,10 +69,29 @@
 						2x Factory Jacob production rate<br>
 						Cost: 10000 Jacobs
 					</div>
-					<div class="upgrade_div" id="upgrade_build_school" onclick="buildSchool()">
+					<div class="upgrade_div" id="upgrade_factory_rate_3" onclick="upgradeFactoryRate3()">
+						<h4>Dented Bumper</h4>
+						Comes with a complimentary Honda Pilot<br>
+						3x Factory Jacob production rate<br>
+						Cost: 100000 Jacobs
+					</div>
+					
+					<div class="upgrade_div" id="upgrade_build_school" onclick="upgradeBuildSchool()">
 						<h4>Build a School</h4>
 						Jacobs love to learn, building a school will increase productivity<br>
 						Cost: 10000 Jacobs
+					</div>
+					<div class="upgrade_div" id="upgrade_unlock_developer_jacobs" onclick="upgradeUnlockDeveloperJacobs()">
+						<h4>Unlock Developer Jacobs</h4>
+						Cost: 100000 Jacobs
+					</div>
+					<div class="upgrade_div" id="upgrade_unlock_engineer_jacobs" onclick="upgradeUnlockEngineerJacobs()">
+						<h4>Unlock Engineer Jacobs</h4>
+						Cost: 1000000 Jacobs
+					</div>
+					<div class="upgrade_div" id="upgrade_unlock_architect_jacobs" onclick="upgradeUnlockArchitectJacobs()">
+						<h4>Unlock Architect Jacobs</h4>
+						Cost: 10000000 Jacobs
 					</div>
 					
 				</div>
