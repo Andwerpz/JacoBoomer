@@ -280,24 +280,24 @@ function purchaseFactoryJacob() {
   }
 }
 function upgradeFactoryRate1() {
-  if(jacobs >= 1000){
-  	jacobs -= 1000;
+  if(jacobs >= 200){
+  	jacobs -= 200;
   	factoryRateLevel = 1;
   	factoryRate *= 2;
   	document.getElementById("upgrade_factory_rate_1").style.display = 'none';
   }
 }
 function upgradeFactoryRate2() {
-  if(jacobs >= 10000){
-  	jacobs -= 10000;
+  if(jacobs >= 500){
+  	jacobs -= 500;
   	factoryRateLevel = 2;
   	factoryRate *= 2;
   	document.getElementById("upgrade_factory_rate_2").style.display = 'none';
   }
 }
 function upgradeFactoryRate3() {
-  if(jacobs >= 100000){
-  	jacobs -= 100000;
+  if(jacobs >= 2000){
+  	jacobs -= 2000;
   	factoryRateLevel = 3;
   	factoryRate *= 3;
   	document.getElementById("upgrade_factory_rate_3").style.display = 'none';
@@ -305,8 +305,8 @@ function upgradeFactoryRate3() {
 }
 
 function upgradeBuildSchool() {
-  if (parseInt(jacobs) >= 10000) {
-    jacobs -= 10000;
+  if (jacobs >= 5000) {
+    jacobs -= 5000;
     document.getElementById("upgrade_build_school").style.display = 'none';
 
     schoolCountdown = schoolCountdownInterval;
@@ -340,22 +340,22 @@ function purchaseArchitectJacob() {
 }
 
 function upgradeUnlockDeveloperJacobs() {
-  if(jacobs >= 100000){
-  	jacobs -= 100000;
+  if(educatedJacobs >= 1){
+  	educatedJacobs -= 1;
   	developerJacobsUnlocked = true;
   	document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'none';
   }
 }
 function upgradeUnlockEngineerJacobs() {
-  if(jacobs >= 1000000){
-  	jacobs -= 1000000;
+  if(code >= 50000){
+  	code -= 50000;
   	engineerJacobsUnlocked = true;
   	document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
   }
 }
 function upgradeUnlockArchitectJacobs() {
-  if(jacobs >= 10000000){
-  	jacobs -= 10000000;
+  if(patents >= 20000){
+  	patents -= 20000;
   	architectJacobsUnlocked = true;
   	document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'none';
   }
