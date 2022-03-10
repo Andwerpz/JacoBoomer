@@ -38,13 +38,13 @@ function loadGame() {
 
     schoolBuilt = savedValues.schoolBuilt;
     schoolJacobs = parseFloat(savedValues.schoolJacobs);
-    
+
     educatedJacobs = parseFloat(savedValues.educatedJacobs);
-    
+
     engineerJacobsUnlocked = savedValues.engineerJacobsUnlocked;
     developerJacobsUnlocked = savedValues.developerJacobsUnlocked;
     architectJacobsUnlocked = savedValues.architectJacobsUnlocked;
-    
+
     engineerJacobs = parseFloat(savedValues.engineerJacobs);
     developerJacobs = parseFloat(savedValues.developerJacobs);
     architectJacobs = parseFloat(savedValues.architectJacobs);
@@ -65,13 +65,13 @@ function saveGame() {
 
     schoolBuilt: schoolBuilt,
     schoolJacobs: schoolJacobs,
-    
+
     educatedJacobs: educatedJacobs,
-    
+
     engineerJacobsUnlocked: engineerJacobsUnlocked,
     developerJacobsUnlocked: developerJacobsUnlocked,
     architectJacobsUnlocked: architectJacobsUnlocked,
-    
+
     engineerJacobs: engineerJacobs,
     developerJacobs: developerJacobs,
     architectJacobs: architectJacobs
@@ -91,18 +91,18 @@ function resetGame() {
   schoolJacobs = 0;
   schoolCountdown = 0;
   schoolCountdownInterval = 60;
-  
+
   educatedJacobs = 0;
-  
+
   engineerJacobsUnlocked = 0;
   developerJacobsUnlocked = 0;
   architectJacobsUnlocked = 0;
-  
+
   engineerJacobs = 0;
   developerJacobs = 0;
   architectJacobs = 0;
-  
-  
+
+
   resetDisplay();
 
   saveGame();
@@ -115,11 +115,15 @@ function resetDisplay() {
   document.getElementById("upgrade_factory_rate_2").style.display = 'none';
   document.getElementById("upgrade_factory_rate_3").style.display = 'none';
   document.getElementById("upgrade_build_school").style.display = 'none';
-  
+
   //RESET BUILDINGS DISPLAY
   document.getElementById("factory_div").style.display = 'none';
   document.getElementById("school_div").style.display = 'none';
-  
+
+  document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'none';
+
   document.getElementById("engineer_jacob_counter_div").style.display = 'none';
   document.getElementById("developer_jacob_counter_div").style.display = 'none';
   document.getElementById("architect_jacob_counter_div").style.display = 'none';
@@ -129,7 +133,7 @@ function resetDisplay() {
 function tick() {
   updateCounters();
   reloadCounters();
-  
+
   //FACTORY
   if (factoryBuilt) {
     document.getElementById("factory_div").style.display = 'inline';
@@ -146,7 +150,7 @@ function tick() {
   if(factoryBuilt && factoryRateLevel == 2 && jacobs >= 50000){
     document.getElementById("upgrade_factory_rate_3").style.display = 'block';
   }
-  
+
   //SCHOOL
   if (!schoolBuilt && jacobs >= 5000) {
     document.getElementById("upgrade_build_school").style.display = 'block';
@@ -183,9 +187,9 @@ function reloadCounters() {
 
   document.getElementById("school_jacob_counter").innerHTML = parseInt(schoolJacobs);
   document.getElementById("school_countdown").innerHTML = parseInt(schoolCountdown);
-  
+
   document.getElementById("educated_jacob_counter").innerHTML = parseInt(educatedJacobs);
-  
+
   document.getElementById("engineer_jacob_counter").innerHTML = parseInt(engineerJacobs);
   document.getElementById("developer_jacob_counter").innerHTML = parseInt(developerJacobs);
   document.getElementById("architect_jacob_counter").innerHTML = parseInt(architectJacobs);
@@ -237,9 +241,9 @@ function upgradeBuildSchool() {
   if (parseInt(jacobs) >= 10000) {
     jacobs -= 10000;
     document.getElementById("upgrade_build_school").style.display = 'none';
-    
+
     schoolCountdown = schoolCountdownInterval;
-    
+
     schoolBuilt = true;
   }
 }
@@ -295,15 +299,15 @@ function updateCounters() {
 
   let timeDiff = (Date.now() - prevUpdateTime) / 1000;	//time diff in seconds
   prevUpdateTime = Date.now();
-	
+
   //FACTORY
   let jacobDiff = 0;
   jacobDiff += factoryJacobs * factoryRate;
 
   jacobDiff *= timeDiff;
   jacobs += jacobDiff;
-  
-  
+
+
   //SCHOOL COUNTDOWN
   if(schoolBuilt){
   	if(schoolCountdown > schoolCountdownInterval){
