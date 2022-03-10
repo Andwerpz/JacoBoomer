@@ -180,30 +180,30 @@ function tick() {
   if (!factoryBuilt && jacobs >= 50) {
     document.getElementById("upgrade_build_factory").style.display = 'block';
   }
-  if(factoryBuilt && factoryRateLevel === 0 && jacobs >= 500) {
+  if(factoryBuilt && factoryRateLevel === 0 && jacobs >= 110) {
   	document.getElementById("upgrade_factory_rate_1").style.display = 'block';
   }
-  if(factoryBuilt && factoryRateLevel == 1 && jacobs >= 5000){
+  if(factoryBuilt && factoryRateLevel == 1 && jacobs >= 250){
     document.getElementById("upgrade_factory_rate_2").style.display = 'block';
   }
-  if(factoryBuilt && factoryRateLevel == 2 && jacobs >= 50000){
+  if(factoryBuilt && factoryRateLevel == 2 && jacobs >= 1000){
     document.getElementById("upgrade_factory_rate_3").style.display = 'block';
   }
 
   //SCHOOL
-  if (!schoolBuilt && jacobs >= 5000) {
+  if (!schoolBuilt && jacobs >= 2500) {
     document.getElementById("upgrade_build_school").style.display = 'block';
   }
   if(schoolBuilt){
   	document.getElementById("school_div").style.display = 'inline';
   }
-  if(schoolBuilt && !developerJacobsUnlocked && jacobs >= 50000){
+  if(schoolBuilt && !developerJacobsUnlocked){
   	document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'block';
   }
-  if(schoolBuilt && !engineerJacobsUnlocked && jacobs >= 500000){
+  if(schoolBuilt && !engineerJacobsUnlocked && code >= 10000){
   	document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'block';
   }
-  if(schoolBuilt && !architectJacobsUnlocked && jacobs >= 5000000){
+  if(schoolBuilt && !architectJacobsUnlocked && patents >= 3000){
   	document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'block';
   }
   
