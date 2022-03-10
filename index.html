@@ -32,6 +32,12 @@
 					Factory Jacob Production Rate: <span id="factory_jacob_rate"></span><br>
 					Jacobs per second: <span id="factory_jacob_rate_counter"></span><br>
 					<br>
+					<div id="robot_overseer_div">
+						<button onclick="purchaseRobotOverseer()">Build Robot Overseer</button><br>
+						Cost: <span id="robot_overseer_cost_counter"></span> Lines of Code<br>
+						Robot Overseers: <span id="robot_overseer_counter"></span><br>
+						<br>
+					</div>
 				</div>
 				<div id="school_div">
 					<h3>School</h3>
@@ -95,8 +101,13 @@
 					</div>
 					<div class="upgrade_div" id="upgrade_unlock_developer_terminal" onclick="upgradeUnlockDeveloperTerminal()">
 						<h4>Developer Terminal</h4>
-						Whatever you do, don't type sv_cheats<br>
+						Re-enact your favorite NCIS hacking scenes<br>
 						Cost: 1000 Lines of Code
+					</div>
+					<div class="upgrade_div" id="upgrade_unlock_robot_overseers" onclick="upgradeUnlockRobotOverseers()">
+						<h4>Unlock Robot Overseer</h4>
+						Automatically hire jacobs to join the factory!<br>
+						Cost: 5000 Lines of Code
 					</div>
 					
 				</div>
@@ -107,6 +118,10 @@
 					<hr>
 					Lines of Code: <span id="code_counter"></span><br>
 					<br>
+					<div id="developer_terminal_div">
+						<h4>Developer Terminal</h4>
+						<canvas id="developer_terminal_canvas" width="300" height="150" style="border:1px solid #FFFFFF;"></canvas>
+					</div>
 				</div>
 				<div id="engineer_jacob_div">
 					<h3>Engineer Workplace</h3>

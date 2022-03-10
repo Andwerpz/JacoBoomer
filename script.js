@@ -19,6 +19,8 @@ let architectJacobsUnlocked = false;
 let developerJacobs = 0;
 let code = 0;
 let developerTerminalUnlocked = false;
+let robotOverseersUnlocked = false;
+let robotOverseers = 0;
 
 let engineerJacobs = 0;
 let patents = 0;
@@ -54,6 +56,8 @@ function loadGame() {
 	developerJacobs = parseFloat(savedValues.developerJacobs);
 	code = parseFloat(savedValues.code);
 	developerTerminalUnlocked = savedValues.developerTerminalUnlocked;
+	robotOverseersUnlocked = savedValues.robotOverseersUnlocked;
+	robotOverseers = parseFloat(savedValues.robotOverseers);
 	
     engineerJacobs = parseFloat(savedValues.engineerJacobs);
     patents = parseFloat(savedValues.patents);
@@ -87,6 +91,8 @@ function saveGame() {
     developerJacobs: developerJacobs,
     code: code,
     developerTerminalUnlocked: developerTerminalUnlocked,
+    robotOverseersUnlocked: robotOverseersUnlocked,
+    robotOverseers: robotOverseers,
     
     engineerJacobs: engineerJacobs,
     patents: patents,
@@ -119,6 +125,8 @@ function resetGame() {
   developerJacobs = 0;
   code = 0;
   developerTerminalUnlocked = false;
+  robotOverseersUnlocked = false;
+  robotOverseers = 0;
   
   engineerJacobs = 0;
   patents = 0;
@@ -138,18 +146,20 @@ function resetDisplay() {
   document.getElementById("upgrade_factory_rate_2").style.display = 'none';
   document.getElementById("upgrade_factory_rate_3").style.display = 'none';
   document.getElementById("upgrade_build_school").style.display = 'none';
-
+  document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'none';
+  document.getElementById("upgrade_unlock_developer_terminal").style.display = 'none';
+  document.getElementById("upgrade_unlock_robot_overseers").style.display = 'none';
+  
   //RESET BUILDINGS DISPLAY
   document.getElementById("factory_div").style.display = 'none';
   document.getElementById("school_div").style.display = 'none';
   
-  document.getElementById("upgrade_unlock_developer_jacobs").style.display = 'none';
-  document.getElementById("upgrade_unlock_engineer_jacobs").style.display = 'none';
-  document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'none';
-  
   document.getElementById("developer_jacob_counter_div").style.display = 'none';
   document.getElementById("developer_jacob_div").style.display = 'none';
-  document.getElementById("upgrade_unlock_developer_terminal").style.display = 'none';
+  document.getElementById("developer_terminal_div").style.display = 'none';
+  document.getElementById("robot_overseer_div").style.display = 'none';
   
   document.getElementById("engineer_jacob_counter_div").style.display = 'none';
   document.getElementById("engineer_jacob_div").style.display = 'none';
@@ -196,17 +206,32 @@ function tick() {
   if(schoolBuilt && !architectJacobsUnlocked && jacobs >= 5000000){
   	document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'block';
   }
+  
+  //DEVELOPER JACOBS
   if(developerJacobsUnlocked){
   	document.getElementById("developer_jacob_counter_div").style.display = 'inline';
   	document.getElementById("developer_jacob_div").style.display = 'inline';
   }
+  if(developerTerminalUnlocked){
+  	document.getElementById("developer_terminal_div").style.display = 'inline';
+  }
+  if(robotOverseersUnlocked){
+  	document.getElementById("robot_overseer_div").style.display = 'inline';
+  }
   if(developerJacobsUnlocked && code >= 100 && !developerTerminalUnlocked){
   	document.getElementById("upgrade_unlock_developer_terminal").style.display = 'block';
   }
+  if(developerJacobsUnlocked && code >= 1100 && !robotOverseersUnlocked){
+  	document.getElementById("upgrade_unlock_robot_overseers").style.display = 'block';
+  }
+  
+  //ENGINEER JACOBS
   if(engineerJacobsUnlocked){
     document.getElementById("engineer_jacob_counter_div").style.display = 'inline';
     document.getElementById("engineer_jacob_div").style.display = 'inline';
   }
+  
+  //ARCHITECT JACOBS
   if(architectJacobsUnlocked){
   	document.getElementById("architect_jacob_counter_div").style.display = 'inline';
   	document.getElementById("architect_jacob_div").style.display = 'inline';
@@ -227,6 +252,8 @@ function reloadCounters() {
   
   document.getElementById("developer_jacob_counter").innerHTML = parseInt(developerJacobs);
   document.getElementById("code_counter").innerHTML = parseInt(code);
+  document.getElementById("robot_overseer_counter").innerHTML = parseInt(robotOverseers);
+  document.getElementById("robot_overseer_cost_counter").innerHTML = parseInt(calculateRobotOverseerCost());
   
   document.getElementById("engineer_jacob_counter").innerHTML = parseInt(engineerJacobs);
   document.getElementById("patent_counter").innerHTML = parseInt(patents);
@@ -342,6 +369,24 @@ function upgradeUnlockDeveloperTerminal() {
   }
 }
 
+function upgradeUnlockRobotOverseers(){
+  if(code >= 5000){
+    code -= 5000;
+    robotOverseersUnlocked = true;
+    document.getElementById("upgrade_unlock_robot_overseers").style.display = 'none';
+  }
+}
+
+function purchaseRobotOverseer() {
+  if(code >= calculateRobotOverseerCost()){
+  	code -= calculateRobotOverseerCost();
+  	robotOverseers += 1;
+  }
+}
+function calculateRobotOverseerCost() {
+  return robotOverseers * robotOverseers * 27 + 727;
+}
+
 
 function updateCounters() {
 
@@ -370,4 +415,11 @@ function updateCounters() {
   
   //DEVELOPER JACOBS
   code += developerJacobs * timeDiff;
+  
+  //ROBOT OVERSEERS
+  let hiredJacobs = robotOverseers * timeDiff;
+  if(jacobs >= hiredJacobs){
+  	jacobs -= hiredJacobs;
+  	factoryJacobs += hiredJacobs;
+  }
 }
