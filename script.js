@@ -19,6 +19,10 @@ let architectJacobsUnlocked = false;
 let developerJacobs = 0;
 let code = 0;
 let developerTerminalUnlocked = false;
+let developerTerminalBadCommands = new Array("kill", "boo", "kekw", "segfault");
+let developerTerminalNeutralCommands = new Array("consoleLog", "print", "invSqrt")
+let developerTerminalGoodCommands = new Array("wysi", "bogosort", "sv_cheats");
+let developerTerminalCommands = new Array();	//currently drawn commands
 let robotOverseersUnlocked = false;
 let robotOverseers = 0;
 
@@ -214,6 +218,10 @@ function tick() {
   }
   if(developerTerminalUnlocked){
   	document.getElementById("developer_terminal_div").style.display = 'inline';
+  	if(Math.random() <= 0.02){
+  	  useDeveloperTerminal();
+  	}
+  	drawDeveloperTerminal();
   }
   if(robotOverseersUnlocked){
   	document.getElementById("robot_overseer_div").style.display = 'inline';
@@ -367,6 +375,68 @@ function upgradeUnlockDeveloperTerminal() {
   	developerTerminalUnlocked = true;
   	document.getElementById("upgrade_unlock_developer_terminal").style.display = 'none';
   }
+}
+function drawDeveloperTerminal() {
+  var c = document.getElementById("developer_terminal_canvas");
+  var ctx = c.getContext("2d");
+  var width = ctx.canvas.width;
+  var height = ctx.canvas.height;
+  
+  //REFRESH CANVAS
+  ctx.fillStyle = 'black';
+  ctx.fillRect(0, 0, width, height);
+  
+  //CURSOR
+  ctx.fillStyle = 'white';
+  if(parseInt(Date.now() / 500) % 2 == 0){
+    ctx.fillRect(10, height - 13, 7, 2);
+  }
+  
+  //COMMANDS
+  var fontSize = 12;
+  var lineGap = 3;
+  var font = fontSize + "px Arial";
+  ctx.font = font;
+
+  for(var i = 0; i < developerTerminalCommands.length; i++){
+  	var x = 10;
+  	var y = height - 13 - (i + 1) * (fontSize + lineGap);
+  	var text = developerTerminalCommands[i] + "()";
+  	ctx.fillStyle = 'white';
+  	if(developerTerminalBadCommands.includes(developerTerminalCommands[i])){
+  	  ctx.fillStyle = 'red';
+  	}
+  	else if(developerTerminalNeutralCommands.includes(developerTerminalCommands[i])){
+  	  ctx.fillStyle = 'white';
+  	}
+  	else if(developerTerminalGoodCommands.includes(developerTerminalCommands[i])){
+  	  ctx.fillStyle = '#22CCEE';
+  	}
+  	ctx.fillText(text, x, y);
+  }
+}
+function useDeveloperTerminal() {
+	let badChance = 0.2;
+	let neutralChance = 0.6;
+	let goodChance = 0.2;
+	
+	neutralChance += badChance;
+	goodChance += neutralChance;
+	
+	let rand = Math.random();
+	
+	if(rand <= badChance){
+	  developerTerminalCommands.unshift(developerTerminalBadCommands[Math.floor(Math.random() * developerTerminalBadCommands.length)]);
+	}
+	else if(badChance <= rand && rand <= neutralChance){
+	  developerTerminalCommands.unshift(developerTerminalNeutralCommands[Math.floor(Math.random() * developerTerminalNeutralCommands.length)]);
+	}
+	else if(neutralChance <= rand && rand <= goodChance){
+	  developerTerminalCommands.unshift(developerTerminalGoodCommands[Math.floor(Math.random() * developerTerminalGoodCommands.length)]);
+	}
+	if(developerTerminalCommands.length >= 20){
+	  developerTerminalCommands.pop();
+	}
 }
 
 function upgradeUnlockRobotOverseers(){
