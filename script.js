@@ -408,8 +408,10 @@ function updateCounters() {
   	}
   	schoolCountdown -= timeDiff;
   	if(schoolCountdown <= 0){
- 	  educatedJacobs ++;
- 	  schoolJacobs --;
+  	  if(schoolJacobs >= 1){
+  	  	educatedJacobs ++;
+ 	  	schoolJacobs --;
+  	  }
  	  schoolCountdown += schoolCountdownInterval;
  	}
   }
