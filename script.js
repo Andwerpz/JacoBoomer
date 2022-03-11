@@ -409,6 +409,7 @@ function updateCounters() {
   	schoolCountdown -= timeDiff;
   	if(schoolCountdown <= 0){
  	  educatedJacobs ++;
+ 	  schoolJacobs --;
  	  schoolCountdown += schoolCountdownInterval;
  	}
   }
