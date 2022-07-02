@@ -24,13 +24,23 @@
 					<button onclick="constructJacob()">Construct a new Jacob!</button>
 					<br>
 				</div>
+				<div id="farm_div">
+					<h3>Farm</h3>
+					<hr>
+					<button onclick="purchaseFarmJacob()">Send a Jacob to the farm!</button><br>
+					Farm Jacobs: <span id="farm_jacob_counter"></span><br>
+					Farm Jacob Production Rate: <span id="farm_single_rate_counter"></span><br>
+					Food produced per second: <span id="farm_rate_counter"></span><br>
+					Food: <span id="food_counter"></span><br>
+				</div>
 				<div id="factory_div">
 					<h3>Factory</h3>
 					<hr>
 					<button onclick="purchaseFactoryJacob()">Send a Jacob to work!</button><br>
 					Factory Jacobs: <span id="factory_jacob_counter"></span><br>
-					Factory Jacob Production Rate: <span id="factory_jacob_rate"></span><br>
-					Jacobs per second: <span id="factory_jacob_rate_counter"></span><br>
+					Factory Jacob Production Rate: <span id="factory_single_rate_counter"></span><br>
+					Jacobs produced per second: <span id="factory_rate_counter"></span><br>
+					Food consumed per second: <span id="factory_food_rate_counter"></span><br>
 					<br>
 					<div id="robot_overseer_div">
 						<button onclick="purchaseRobotOverseer()">Build Robot Overseer</button><br>
@@ -58,6 +68,11 @@
 				<div id="upgrade_menu_div">
 					<h3>Upgrades</h3>
 					<hr>
+					<div class="upgrade_div" id="upgrade_build_farm" onclick="upgradeBuildFarm()">
+						<h4>Build a Farm</h4>
+						Build a farm to grow food<br>
+						Cost: 50 Jacobs
+					</div>
 					<div class="upgrade_div" id="upgrade_build_factory" onclick="upgradeBuildFactory()">
 						<h4>Build a Factory</h4>
 						Building a factory will help you make more Jacobs<br>
