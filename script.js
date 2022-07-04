@@ -19,6 +19,9 @@ let schoolJacobs = 0;
 let schoolCountdown = 0;
 let schoolCountdownInterval = 60;
 
+let armyBuilt = false;
+let armyJacobs = 0;
+
 let educatedJacobs = 0;
 
 let engineerJacobsUnlocked = false;
@@ -65,9 +68,12 @@ function loadGame() {
 		factoryRateLevel = parseInt(savedValues.factoryRateLevel);
 		factoryRateMultiplier = parseFloat(savedValues.factoryRateMultiplier);
 		factoryFoodRate = parseFloat(savedValues.factoryFoodRate);
-
+		
 		schoolBuilt = savedValues.schoolBuilt;
 		schoolJacobs = parseFloat(savedValues.schoolJacobs);
+		
+		armyBuilt = savedValues.armyBuilt;
+		armyJacobs = parseFloat(savedValues.armyJacobs);
 
 		educatedJacobs = parseFloat(savedValues.educatedJacobs);
 
@@ -109,9 +115,12 @@ function saveGame() {
 		factoryRateLevel: factoryRateLevel,
 		factoryRateMultiplier: factoryRateMultiplier,
 		factoryFoodRate: factoryFoodRate,
-
+		
 		schoolBuilt: schoolBuilt,
 		schoolJacobs: schoolJacobs,
+		
+		armyBuilt: armyBuilt,
+		armyJacobs: armyJacobs,
 
 		educatedJacobs: educatedJacobs,
 
@@ -150,6 +159,9 @@ function resetGame() {
 	factoryRateLevel = 0;
 	factoryRateMultiplier = 1;
 	factoryFoodRate = 0.1;
+	
+	armyBuilt = false;
+	armyJacobs = 0;
 
 	schoolBuilt = false;
 	schoolJacobs = 0;
@@ -179,6 +191,15 @@ function resetGame() {
 	saveGame();
 }
 
+//MAIN LOOP
+function tick() {
+	updateCounters();
+	reloadCounters();
+	
+	resetDisplay();
+	updateDisplay();
+}
+
 function resetDisplay() {
 	//RESET UPGRADES DISPLAY
 	document.getElementById("upgrade_build_factory").style.display = 'none';
@@ -196,6 +217,8 @@ function resetDisplay() {
 	document.getElementById("farm_div").style.display = 'none';
 	document.getElementById("factory_div").style.display = 'none';
 	document.getElementById("school_div").style.display = 'none';
+	
+	document.getElementById("army_div").style.display = 'none';
 
 	document.getElementById("developer_jacob_counter_div").style.display = 'none';
 	document.getElementById("developer_jacob_div").style.display = 'none';
@@ -209,11 +232,7 @@ function resetDisplay() {
 	document.getElementById("architect_jacob_div").style.display = 'none';
 }
 
-//MAIN LOOP
-function tick() {
-	updateCounters();
-	reloadCounters();
-
+function updateDisplay() {
 	//FARM
 	if (farmBuilt) {
 		document.getElementById("farm_div").style.display = 'inline';
@@ -254,6 +273,14 @@ function tick() {
 	}
 	if (schoolBuilt && !architectJacobsUnlocked && patents >= 3000) {
 		document.getElementById("upgrade_unlock_architect_jacobs").style.display = 'block';
+	}
+	
+	//ARMY
+	if(!armyBuilt && jacobs >= 1000){
+		document.getElementById("upgrade_build_army").style.display = 'block';
+	}
+	if(armyBuilt){
+		document.getElementById("army_div").style.display = 'inline';
 	}
 
 	//DEVELOPER JACOBS
@@ -303,6 +330,8 @@ function reloadCounters() {
 	document.getElementById("factory_single_rate_counter").innerHTML = (factoryRate / factoryJacobs).toFixed(2);
 	document.getElementById("factory_rate_counter").innerHTML = (factoryRate).toFixed(2);
 	document.getElementById("factory_food_rate_counter").innerHTML = (factoryFoodRate * factoryJacobs).toFixed(2);
+	
+	document.getElementById("army_jacob_counter").innerHTML = parseInt(armyJacobs);
 
 	document.getElementById("school_jacob_counter").innerHTML = parseInt(schoolJacobs);
 	document.getElementById("school_countdown").innerHTML = parseInt(schoolCountdown);
@@ -319,6 +348,58 @@ function reloadCounters() {
 
 	document.getElementById("architect_jacob_counter").innerHTML = parseInt(architectJacobs);
 	document.getElementById("blueprint_counter").innerHTML = parseInt(blueprints);
+}
+
+function updateCounters() {
+	let timeDiff = (Date.now() - prevUpdateTime) / 1000;	//time diff in seconds
+	prevUpdateTime = Date.now();
+
+	//FOOD
+	//factory workers consume food. if there is not enough food, then factory loses 0.1% of workers
+	//which get turned back into jacobs
+	farmRate = Math.sqrt(farmJacobs * 10) * 0.1 * farmRateMultiplier;
+
+	let foodDiff = farmRate * timeDiff;
+	foodDiff -= factoryJacobs * factoryFoodRate * timeDiff;
+
+	food += foodDiff;
+
+	if (food < 0) {
+		food = 0;
+		let factoryJacobLoss = factoryJacobs * 0.001;
+		jacobs += factoryJacobLoss;
+		factoryJacobs -= factoryJacobLoss;
+	}
+
+	//JACOBS
+	factoryRate = Math.sqrt(factoryJacobs * 20) * 0.1 * factoryRateMultiplier;
+	let jacobDiff = factoryRate * timeDiff;
+	jacobs += jacobDiff;
+
+	//EDUCATED JACOBS
+	if (schoolBuilt) {
+		if (schoolCountdown > schoolCountdownInterval) {
+			schoolCountdown = schoolCountdownInterval;
+		}
+		schoolCountdown -= timeDiff;
+		if (schoolCountdown <= 0) {
+			if (schoolJacobs >= 1) {
+				educatedJacobs++;
+				schoolJacobs--;
+			}
+			schoolCountdown += schoolCountdownInterval;
+		}
+	}
+
+	//CODE
+	code += developerJacobs * timeDiff;
+
+	//FACTORY JACOBS
+	let hiredJacobs = robotOverseers * timeDiff;
+	if (jacobs >= hiredJacobs) {
+		jacobs -= hiredJacobs;
+		factoryJacobs += hiredJacobs;
+	}
 }
 
 function constructJacob() {
@@ -374,6 +455,21 @@ function upgradeFactoryRate3() {
 		factoryRateLevel = 3;
 		factoryRateMultiplier *= 3;
 		document.getElementById("upgrade_factory_rate_3").style.display = 'none';
+	}
+}
+
+function upgradeBuildArmy() {
+	if(jacobs >= 5000){
+		document.getElementById("upgrade_build_army").style.display = 'none';
+		armyBuilt = true;
+		jacobs -= 5000;
+	}
+}
+
+function purchaseArmyJacob() {
+	if(jacobs >= 1){
+		armyJacobs += 1;
+		jacobs -= 1;
 	}
 }
 
@@ -520,53 +616,4 @@ function purchaseRobotOverseer() {
 }
 function calculateRobotOverseerCost() {
 	return robotOverseers * robotOverseers * 27 + 727;
-}
-
-function updateCounters() {
-	let timeDiff = (Date.now() - prevUpdateTime) / 1000;	//time diff in seconds
-	prevUpdateTime = Date.now();
-
-	//FOOD
-	//factory workers consume food. if there is not enough food, then factory loses 0.1% of workers
-	farmRate = Math.sqrt(farmJacobs * 10) * 0.1 * farmRateMultiplier;
-
-	let foodDiff = farmRate * timeDiff;
-	foodDiff -= factoryJacobs * factoryFoodRate * timeDiff;
-
-	food += foodDiff;
-
-	if (food < 0) {
-		food = 0;
-		factoryJacobs *= 0.999;
-	}
-
-	//JACOBS
-	factoryRate = Math.sqrt(factoryJacobs * 20) * 0.1 * factoryRateMultiplier;
-	let jacobDiff = factoryRate * timeDiff;
-	jacobs += jacobDiff;
-
-	//EDUCATED JACOBS
-	if (schoolBuilt) {
-		if (schoolCountdown > schoolCountdownInterval) {
-			schoolCountdown = schoolCountdownInterval;
-		}
-		schoolCountdown -= timeDiff;
-		if (schoolCountdown <= 0) {
-			if (schoolJacobs >= 1) {
-				educatedJacobs++;
-				schoolJacobs--;
-			}
-			schoolCountdown += schoolCountdownInterval;
-		}
-	}
-
-	//CODE
-	code += developerJacobs * timeDiff;
-
-	//FACTORY JACOBS
-	let hiredJacobs = robotOverseers * timeDiff;
-	if (jacobs >= hiredJacobs) {
-		jacobs -= hiredJacobs;
-		factoryJacobs += hiredJacobs;
-	}
 }
